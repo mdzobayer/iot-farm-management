@@ -100,15 +100,16 @@ void loop()
         delay(2000);                                 // 5. waits 2000 milliseconds (2 sec). change the value in the brackets (2000) for a longer or shorter delay in milliseconds.
         servo360Micro.write(90);                     // 6. sending 90 stops the servo
         delay(2000);                                 // 7. waits 2000 milliseconds (2 sec). change the value in the brackets (2000) for a longer or shorter delay in milliseconds.
-        servo360Micro.write(0);
-
+        servo360Micro.write(0); 
+        delay(2000);
+        
+        Serial.println(F("Before Servo detach"));
         servo360Micro.detach(); // 8. release the servo to conserve power. When detached the servo will NOT hold it's position under stress.
+        Serial.println(F("After Servo detach"));
     }
 
-    if (millis() - time0 > timeout)
-    {
-        menuOption = menu();
-    }
+    menuOption = menu();
+
 }
 
 // Menu function for selecting the components to be tested
