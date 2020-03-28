@@ -32,6 +32,14 @@ Servo servo360Micro;
 const int timeout = 10000; //define timeout of 10 sec
 char menuOption = 0;
 long time0;
+int menuOpInt = 0;
+
+BLYNK_WRITE(V1)
+{
+  menuOpInt = param.asInt(); // assigning incoming value from pin V1 to a variable
+
+  // process received value
+}
 
 // Setup the essentials for your circuit to work. It runs first every time your circuit is powered with electricity.
 void setup()
@@ -61,7 +69,7 @@ void setup()
         // January 21, 2014 at 3am you would call:
         // rtcDS.adjust(DateTime(2014, 1, 21, 3, 0, 0));
     }
-    menuOption = menu();
+    // menuOption = menu();
 }
 
 // Main logic of your circuit. It defines the interaction between the components you selected. After setup, it runs over and over again, in an eternal loop.
@@ -70,7 +78,7 @@ void loop()
 
     Blynk.run();
 
-    if (menuOption == '1')
+    if (menuOpInt == 1)
     {
         // RTC - Real Time Clock - Test Code
         //This will display the time and date of the RTC. see RTC.h for more functions such as rtcDS.hour(), rtcDS.month() etc.
@@ -89,7 +97,7 @@ void loop()
         Serial.println();
         delay(1000);
     }
-    else if (menuOption == '2')
+    else if (menuOpInt == 2)
     {
         // Continuous Rotation Micro Servo - FS90R - Test Code
         // The servo will rotate CW in full speed, CCW in full speed, and will stop  with an interval of 2000 milliseconds (2 seconds)
@@ -106,9 +114,8 @@ void loop()
         Serial.println(F("Before Servo detach"));
         servo360Micro.detach(); // 8. release the servo to conserve power. When detached the servo will NOT hold it's position under stress.
         Serial.println(F("After Servo detach"));
+        menuOpInt = 0;
     }
-
-    menuOption = menu();
 
 }
 
